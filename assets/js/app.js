@@ -94,129 +94,6 @@
 
   // --- Chat Completions Create Editor --------------------------------------
   
-  const FIELD_TRANSLATIONS = {
-    messages: {
-      label: "消息列表 (messages)",
-      desc: "对话的历史记录列表。",
-    },
-    model: {
-      label: "模型 (model)",
-      desc: "要使用的模型 ID，例如 gpt-4o。",
-    },
-    store: {
-      label: "存储 (store)",
-      desc: "是否存储此对话记录。",
-    },
-    metadata: {
-      label: "元数据 (metadata)",
-      desc: "存储相关的开发者定义的元数据。",
-    },
-    frequency_penalty: {
-      label: "频率惩罚 (frequency_penalty)",
-      desc: "-2.0 到 2.0 之间的数字。正值会根据新 token 在文本中出现的频率对其进行惩罚，从而降低模型逐字重复同一行的可能性。",
-    },
-    logit_bias: {
-      label: "Logit 偏差 (logit_bias)",
-      desc: "修改指定 token 在补全中出现的可能性。接收一个 JSON 对象，映射 token ID 到 -100 到 100 的偏差值。",
-    },
-    logprobs: {
-      label: "返回 Logprobs (logprobs)",
-      desc: "是否返回输出 token 的对数概率。",
-    },
-    top_logprobs: {
-      label: "Top Logprobs (top_logprobs)",
-      desc: "如果在 logprobs 中为 true，则指定每个位置返回最可能的 token 的数量（0-20）。",
-    },
-    max_tokens: {
-      label: "最大 Token 数 (max_tokens)",
-      desc: "生成的最大 token 数量。（建议在新模型中使用 max_completion_tokens）",
-    },
-    max_completion_tokens: {
-      label: "最大生成 Token 数 (max_completion_tokens)",
-      desc: "生成的 token 的最大数量。对于 o1/o3 系列模型，请使用此字段而非 max_tokens。",
-    },
-    n: {
-      label: "生成条数 (n)",
-      desc: "为每个输入消息生成的聊天补全选项数。",
-    },
-    presence_penalty: {
-      label: "存在惩罚 (presence_penalty)",
-      desc: "-2.0 到 2.0 之间的数字。正值会根据新 token 是否出现在文本中对其进行惩罚，从而增加模型谈论新主题的可能性。",
-    },
-    response_format: {
-      label: "响应格式 (response_format)",
-      desc: "指定模型必须输出的格式。例如 json_object 或 json_schema。",
-    },
-    seed: {
-      label: "随机种子 (seed)",
-      desc: "如果指定，系统将尽最大努力进行确定性采样。",
-    },
-    service_tier: {
-      label: "服务层级 (service_tier)",
-      desc: "指定用于处理请求的延迟层级。",
-    },
-    stop: {
-      label: "停止序列 (stop)",
-      desc: "API 将停止生成更多 token 的序列（最多 4 个）。",
-    },
-    stream: {
-      label: "流式输出 (stream)",
-      desc: "如果设置，将发送部分消息增量。令牌将在可用时作为 data-only server-sent events 发送。",
-    },
-    stream_options: {
-      label: "流式选项 (stream_options)",
-      desc: "流式响应的选项。仅在 stream: true 时设置。",
-    },
-    temperature: {
-      label: "温度 (temperature)",
-      desc: "采样温度，在 0 到 2 之间。较高的值（如 0.8）使输出更随机，较低的值（如 0.2）使其更集中和确定。",
-    },
-    top_p: {
-      label: "核采样 (top_p)",
-      desc: "一种替代温度采样的方法，称为核采样。模型考虑具有 top_p 概率质量的 token 结果。",
-    },
-    tools: {
-      label: "工具列表 (tools)",
-      desc: "模型可以调用的工具列表（如函数定义）。",
-    },
-    tool_choice: {
-      label: "工具选择 (tool_choice)",
-      desc: "控制模型是否调用工具（none, auto, required, 或指定具体函数）。",
-    },
-    user: {
-      label: "用户标识 (user)",
-      desc: "代表最终用户的唯一标识符，可帮助 OpenAI 监控和检测滥用行为。",
-    },
-    parallel_tool_calls: {
-      label: "并行工具调用 (parallel_tool_calls)",
-      desc: "是否在一次请求中启用并行函数调用。",
-    },
-    reasoning_effort: {
-      label: "推理强度 (reasoning_effort)",
-      desc: "o1/o3 模型专用。限制模型在生成响应之前的思考/推理程度（low, medium, high）。",
-    },
-    prediction: {
-      label: "预测输出 (prediction)",
-      desc: "配置预测输出，通过提供预期的输出来加速生成。",
-    },
-    modalities: {
-      label: "输出模态 (modalities)",
-      desc: "指定模型应生成的输出类型（如 text, audio）。",
-    },
-    audio: {
-      label: "音频参数 (audio)",
-      desc: "当 modalities 包含 audio 时，配置音频生成的参数（voice, format）。",
-    },
-    function_call: {
-      label: "函数调用 (function_call)",
-      desc: "已废弃。请使用 tools 代替。",
-    },
-    functions: {
-      label: "函数列表 (functions)",
-      desc: "已废弃。请使用 tools 代替。",
-    }
-  };
-
   /**
    * @param {string} type
    * @returns {string}
@@ -410,15 +287,8 @@
     wrap.setAttribute("data-type", f.type);
     wrap.setAttribute("data-required", f.required ? "true" : "false");
 
-    // Use translation if available
-    const tr = FIELD_TRANSLATIONS[f.name];
-    const rawTitle = tr ? tr.label : f.name;
-    const title = `${rawTitle}${f.required ? " *" : ""}`; // Clean asterisk for required
-    
-    // Prefer translated description, fallback to SDK description
-    const rawDesc = tr ? tr.desc : f.description || "";
-    const descHtml = escapeHtml(rawDesc).replaceAll("\n", "<br />");
-    
+    const title = `${f.name}${f.required ? " *" : ""}`; 
+    const descHtml = escapeHtml(f.description || "").replaceAll("\n", "<br />");
     const prettyType = niceType(f.type);
 
     const head = document.createElement("div");
