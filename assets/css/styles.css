@@ -123,6 +123,7 @@ a {
   box-shadow: var(--shadow);
   font-weight: 800;
   letter-spacing: 0.5px;
+  color: #fff;
 }
 
 .brand-title {
@@ -317,11 +318,24 @@ a {
   font-family: var(--mono);
   font-size: 13px;
   outline: none;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.textarea:focus,
+.input:focus {
+  border-color: var(--primary-2);
+  background: rgba(0, 0, 0, 0.08);
 }
 
 html[data-theme="light"] .textarea,
 html[data-theme="light"] .input {
   background: rgba(255, 255, 255, 0.65);
+}
+
+html[data-theme="light"] .textarea:focus,
+html[data-theme="light"] .input:focus {
+  background: #fff;
+  border-color: var(--primary);
 }
 
 .textarea {
@@ -440,30 +454,77 @@ html[data-theme="light"] .errors {
 }
 
 .param-item {
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
   background: rgba(255, 255, 255, 0.02);
-  padding: 12px;
+  padding: 16px;
   display: grid;
-  gap: 10px;
+  gap: 12px;
+  transition: background 120ms ease;
+}
+
+html[data-theme="light"] .param-item {
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.param-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+html[data-theme="light"] .param-item:hover {
+  background: #fff;
+  border-color: rgba(14, 18, 36, 0.2);
 }
 
 .param-head {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 10px;
 }
 
+.param-name-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .param-name {
-  font-weight: 800;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.badge-req {
+  background: rgba(255, 77, 109, 0.15);
+  color: var(--danger);
+  border: 1px solid rgba(255, 77, 109, 0.2);
 }
 
 .param-type {
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 11px;
   color: var(--muted);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 3px 6px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
 }
+
+html[data-theme="light"] .param-type {
+  background: rgba(0, 0, 0, 0.04);
+}
+
 
 .checks {
   display: flex;
