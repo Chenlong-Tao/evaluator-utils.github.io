@@ -1,7 +1,7 @@
 # evaluator-utils.github.io
 
 一个简单的 GitHub Pages 工具页（纯静态、无依赖）：把 **Python SDK** 的
-`client.chat.completions.create(...)` 请求参数做成 **可视化编辑器**，并在校验通过后输出 **压缩 JSON** 供复制。
+`client.chat.completions.create(...)` 请求参数做成 **可视化编辑器**，并在校验通过后输出 **压缩 JSON** 供复制（一个总 JSON，扁平合并请求体字段与 request options）。
 
 > 说明：当前页面 **不包含 `messages` 字段**（已按你的需求移除）。
 
@@ -35,11 +35,12 @@ python3 -m http.server 5173
 
 ## 使用说明
 
-- 在页面中填写 **model**（必填）。
+- 在页面中填写 **model**（可选；你也可以在别处补上）。
 - 页面不提供 `messages` 编辑（已按需求移除），输出 JSON 中也不会包含该字段。
 - 其余字段按需填写；留空则不会出现在输出 JSON 里。
-- 若任何字段类型/JSON 语法不合法，**输出区会保持为空**，并在错误区显示原因。
-- 校验通过后，输出区会给出 **压缩 JSON**，点“复制输出 JSON”即可复制。
+- 若任何字段类型/JSON 语法不合法，错误区会显示原因；**输出区仍会实时展示当前可解析的 JSON**（会忽略错误字段），但需要修正错误后才允许复制。
+- 校验通过后，输出区会给出 **压缩 JSON**，点“复制输出 JSON”即可复制（请求体字段与 request options 会合并到同一层）。
+- 页面会使用浏览器 `localStorage` **自动缓存上一次填写的内容**（包括 Request Options / extra 等）；点击“重置”会同时清空缓存。
 
 ## 关于“全部参数”
 

@@ -55,32 +55,45 @@
         </div>
 
         <div class="grid">
-          <article class="card" data-tool="chat-create">
-            <header class="card-head">
+          <div class="tool-panel" data-tool="chat-create">
+            <header class="tool-head">
               <h3><code>client.chat.completions.create</code></h3>
-              <div class="card-actions">
+              <div class="tool-actions">
                 <button class="btn btn-ghost btn-sm" data-action="reset" type="button">重置</button>
-                <button class="btn btn-ghost btn-sm" data-action="copy" type="button">复制输出 JSON</button>
               </div>
             </header>
-            <div class="card-body">
+            <div class="tool-body">
               <label class="field">
-                <span class="field-label">Model (模型名称) <span class="muted" style="font-weight:normal">*</span></span>
-                <input class="input" data-role="model" placeholder="例如：gpt-4o" />
-                <span class="help muted">必填。要使用的模型 ID。</span>
+                <span class="field-label">Model (模型名称)</span>
+                <input class="input" data-role="model" list="model-suggestions" placeholder="例如：gpt-4o" />
+                <datalist id="model-suggestions">
+                  <option value="gpt-4o"></option>
+                  <option value="gpt-4o-mini"></option>
+                  <option value="gpt-4-turbo"></option>
+                  <option value="gpt-4"></option>
+                  <option value="gpt-3.5-turbo"></option>
+                  <option value="o1-preview"></option>
+                  <option value="o1-mini"></option>
+                </datalist>
+                <span class="help muted">可选。要使用的模型 ID（你也可以在别处补上）。</span>
               </label>
 
               <div class="divider"></div>
 
               <label class="field">
                 <span class="field-label">搜索参数</span>
-                <input class="input" data-role="paramSearch" placeholder="搜索参数名，例如：temp / max / stop..." />
+                <input class="input" type="search" data-role="paramSearch" placeholder="搜索参数名，例如：temp / max / stop..." />
                 <span class="help muted">参数定义来自 <code>openai==1.99.9</code> SDK。</span>
               </label>
 
               <details class="details" open>
                 <summary>参数列表 (openai==1.99.9)</summary>
                 <div class="details-body" data-role="autoParams"></div>
+              </details>
+
+              <details class="details" open>
+                <summary>请求选项 (Request Options)</summary>
+                <div class="details-body" data-role="requestOptions"></div>
               </details>
 
               <details class="details">
@@ -96,14 +109,25 @@
 
               <div class="divider"></div>
 
-              <label class="field">
-                <span class="field-label">输出结果 (Compact JSON)</span>
-                <textarea class="textarea" data-role="output" spellcheck="false" readonly placeholder="填写参数并通过校验后，此处显示可复制的 JSON"></textarea>
-              </label>
+              <div class="field">
+                <div class="field-head-row">
+                  <span class="field-label">输出结果</span>
+                  <div class="field-actions">
+                    <button class="btn btn-ghost btn-xs" data-action="copy-output" type="button">
+                      <span class="btn-icon">❐</span> 复制结果
+                    </button>
+                  </div>
+                </div>
+                <div class="output-wrap">
+                  <pre class="output-pre"><code data-role="output-display"></code></pre>
+                  <textarea class="textarea visually-hidden" data-role="output" readonly></textarea>
+                </div>
+                <span class="help muted">界面展示为美化格式，<b>复制内容为紧凑格式</b>（Compact JSON）。</span>
+              </div>
               <div class="errors" data-role="errors" aria-live="polite"></div>
               <p class="hint" data-role="hint" aria-live="polite"></p>
             </div>
-          </article>
+          </div>
         </div>
       </section>
 

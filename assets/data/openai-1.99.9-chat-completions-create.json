@@ -4,276 +4,267 @@
     "version": "1.99.9"
   },
   "endpoint": "client.chat.completions.create",
-  "fields": [
+  "body_fields": [
     {
       "name": "messages",
-      "type": "Required[Iterable[ChatCompletionMessageParam]]",
+      "type": "List[Dict[str,Any]]",
+      "sdk_type": "Iterable[ChatCompletionMessageParam]",
       "required": true,
       "description": "包含目前为止对话的消息列表。\n\n    取决于你使用的 [模型](https://platform.openai.com/docs/models)，支持不同的消息类型（模态），如 [文本](https://platform.openai.com/docs/guides/text-generation)、[图像](https://platform.openai.com/docs/guides/vision) 和 [音频](https://platform.openai.com/docs/guides/audio)。"
     },
     {
       "name": "model",
-      "type": "Required[Union[str, ChatModel]]",
+      "type": "Union[str,Any]",
+      "sdk_type": "Union[str, ChatModel]",
       "required": true,
       "description": "用于生成响应的模型 ID，例如 `gpt-4o` 或 `o3`。\n\n    OpenAI 提供了多种具有不同能力、性能特征和价格的模型。请参阅 [模型指南](https://platform.openai.com/docs/models) 以浏览和比较可用模型。"
     },
     {
       "name": "audio",
-      "type": "Optional[ChatCompletionAudioParam]",
+      "type": "Optional[Dict[str,Any]]",
+      "sdk_type": "Optional[ChatCompletionAudioParam]",
       "required": false,
       "description": "音频输出的参数。\n\n    当通过 `modalities: [\"audio\"]` 请求音频输出时必填。[了解更多](https://platform.openai.com/docs/guides/audio)。"
     },
     {
       "name": "frequency_penalty",
       "type": "Optional[float]",
+      "sdk_type": "Optional[float]",
       "required": false,
       "description": "-2.0 到 2.0 之间的数字。\n\n    正值会根据新 token 在文本中出现的频率对其进行惩罚，从而降低模型逐字重复同一行的可能性。"
     },
     {
       "name": "function_call",
-      "type": "FunctionCall",
+      "type": "Optional[Union[str,Dict[str,Any]]]",
+      "sdk_type": "FunctionCall",
       "required": false,
       "description": "已废弃，建议使用 `tool_choice`。\n\n    控制模型是否调用函数（`none`, `auto`, 或指定函数）。"
     },
     {
       "name": "functions",
-      "type": "Iterable[Function]",
+      "type": "Optional[List[Dict[str,Any]]]",
+      "sdk_type": "Iterable[Function]",
       "required": false,
       "description": "已废弃，建议使用 `tools`。\n\n    模型可以为其生成 JSON 输入的函数列表。"
     },
     {
       "name": "logit_bias",
-      "type": "Optional[Dict[str, int]]",
+      "type": "Optional[Dict[str,int]]",
+      "sdk_type": "Optional[Dict[str, int]]",
       "required": false,
       "description": "修改指定 token 在补全中出现的可能性。\n\n    接收一个 JSON 对象，将 token（由 tokenizer 中的 token ID 指定）映射到 -100 到 100 的偏差值。"
     },
     {
       "name": "logprobs",
       "type": "Optional[bool]",
+      "sdk_type": "Optional[bool]",
       "required": false,
       "description": "是否返回输出 token 的对数概率。\n\n    如果为 true，则在 `message` 的 `content` 中返回每个输出 token 的对数概率。"
     },
     {
       "name": "max_completion_tokens",
       "type": "Optional[int]",
+      "sdk_type": "Optional[int]",
       "required": false,
       "description": "生成的最大 token 数量上限，包括可见输出 token 和 [推理 token](https://platform.openai.com/docs/guides/reasoning)。"
     },
     {
       "name": "max_tokens",
       "type": "Optional[int]",
+      "sdk_type": "Optional[int]",
       "required": false,
       "description": "聊天补全中生成的最大 [token](/tokenizer) 数。\n\n    该值已废弃，建议使用 `max_completion_tokens`，且不兼容 [o 系列模型](https://platform.openai.com/docs/guides/reasoning)。"
     },
     {
       "name": "metadata",
-      "type": "Optional[Metadata]",
+      "type": "Optional[Dict[str,str]]",
+      "sdk_type": "Optional[Metadata]",
       "required": false,
       "description": "可以附加到对象的 16 个键值对集合。\n\n    这对以结构化格式存储有关对象的附加信息并通过 API 或仪表板查询对象很有用。"
     },
     {
       "name": "modalities",
-      "type": "Optional[List[Literal[\"text\", \"audio\"]]]",
+      "type": "Optional[List[str]]",
+      "sdk_type": "Optional[List[Literal[\"text\", \"audio\"]]]",
       "required": false,
       "description": "你希望模型生成的输出类型。大多数模型都能生成文本，这是默认值：\n\n    `[\"text\"]`\n\n    `gpt-4o-audio-preview` 模型也可以用于 [生成音频](https://platform.openai.com/docs/guides/audio)。要请求该模型同时生成文本和音频响应，可以使用：\n\n    `[\"text\", \"audio\"]`"
     },
     {
       "name": "n",
       "type": "Optional[int]",
+      "sdk_type": "Optional[int]",
       "required": false,
       "description": "为每个输入消息生成的聊天补全选项数。\n\n    请注意，将根据所有选项生成的 token 总数收费。保持 `n` 为 `1` 以最大限度地降低成本。"
     },
     {
       "name": "parallel_tool_calls",
-      "type": "bool",
+      "type": "Optional[bool]",
+      "sdk_type": "bool",
       "required": false,
       "description": "是否在工具使用期间启用 [并行函数调用](https://platform.openai.com/docs/guides/function-calling#configuring-parallel-function-calling)。"
     },
     {
       "name": "prediction",
-      "type": "Optional[ChatCompletionPredictionContentParam]",
+      "type": "Optional[Dict[str,Any]]",
+      "sdk_type": "Optional[ChatCompletionPredictionContentParam]",
       "required": false,
       "description": "静态预测输出内容，例如正在重新生成的文本文件的内容。"
     },
     {
       "name": "presence_penalty",
       "type": "Optional[float]",
+      "sdk_type": "Optional[float]",
       "required": false,
       "description": "-2.0 到 2.0 之间的数字。\n\n    正值会根据新 token 是否出现在目前的文本中对其进行惩罚，从而增加模型谈论新主题的可能性。"
     },
     {
       "name": "prompt_cache_key",
-      "type": "str",
+      "type": "Optional[str]",
+      "sdk_type": "str",
       "required": false,
       "description": "OpenAI 用于缓存类似请求的响应以优化缓存命中率。替代 `user` 字段。[了解更多](https://platform.openai.com/docs/guides/prompt-caching)。"
     },
     {
       "name": "reasoning_effort",
-      "type": "Optional[ReasoningEffort]",
+      "type": "Optional[str]",
+      "sdk_type": "Optional[ReasoningEffort]",
       "required": false,
       "description": "限制 [推理模型](https://platform.openai.com/docs/guides/reasoning) 的推理强度。目前支持的值为 `minimal`, `low`, `medium`, 和 `high`。"
     },
     {
       "name": "response_format",
-      "type": "ResponseFormat",
+      "type": "Optional[Dict[str,Any]]",
+      "sdk_type": "ResponseFormat",
       "required": false,
       "description": "指定模型必须输出的格式。\n\n    设置为 `{ \"type\": \"json_schema\", \"json_schema\": {...} }` 可启用结构化输出。设置为 `{ \"type\": \"json_object\" }` 可启用旧版 JSON 模式。"
     },
     {
       "name": "safety_identifier",
-      "type": "str",
+      "type": "Optional[str]",
+      "sdk_type": "str",
       "required": false,
       "description": "用于帮助检测可能违反 OpenAI 使用政策的用户的稳定标识符。ID 应该是唯一标识每个用户的字符串。[了解更多](https://platform.openai.com/docs/guides/safety-best-practices#safety-identifiers)。"
     },
     {
       "name": "seed",
       "type": "Optional[int]",
+      "sdk_type": "Optional[int]",
       "required": false,
       "description": "如果指定，系统将尽最大努力进行确定性采样，以便具有相同 `seed` 和参数的重复请求应返回相同的结果。"
     },
     {
       "name": "service_tier",
-      "type": "Optional[Literal[\"auto\", \"default\", \"flex\", \"scale\", \"priority\"]]",
+      "type": "Optional[str]",
+      "sdk_type": "Optional[Literal[\"auto\", \"default\", \"flex\", \"scale\", \"priority\"]]",
       "required": false,
       "description": "指定用于处理请求的服务层级（如 `auto`, `default`, `flex`）。"
     },
     {
       "name": "stop",
-      "type": "Union[Optional[str], List[str], None]",
+      "type": "Optional[Union[Optional[str],List[str],Any]]",
+      "sdk_type": "Union[Optional[str], List[str], None]",
       "required": false,
       "description": "API 将停止生成更多 token 的序列（最多 4 个）。"
     },
     {
       "name": "store",
       "type": "Optional[bool]",
+      "sdk_type": "Optional[bool]",
       "required": false,
       "description": "是否存储此聊天补全请求的输出，以用于我们的 [模型蒸馏](https://platform.openai.com/docs/guides/distillation) 或 [评估](https://platform.openai.com/docs/guides/evals) 产品。"
     },
     {
       "name": "stream_options",
-      "type": "Optional[ChatCompletionStreamOptionsParam]",
+      "type": "Optional[Dict[str,Any]]",
+      "sdk_type": "Optional[ChatCompletionStreamOptionsParam]",
       "required": false,
       "description": "流式响应的选项。仅在设置 `stream: true` 时设置。"
     },
     {
       "name": "temperature",
       "type": "Optional[float]",
+      "sdk_type": "Optional[float]",
       "required": false,
       "description": "使用的采样温度，在 0 到 2 之间。\n\n    较高的值（如 0.8）使输出更随机，较低的值（如 0.2）使其更集中和确定。"
     },
     {
       "name": "tool_choice",
-      "type": "ChatCompletionToolChoiceOptionParam",
+      "type": "Optional[Union[str,Dict[str,Any]]]",
+      "sdk_type": "ChatCompletionToolChoiceOptionParam",
       "required": false,
       "description": "控制模型是否调用工具（`none`, `auto`, `required`, 或指定具体函数）。"
     },
     {
       "name": "tools",
-      "type": "Iterable[ChatCompletionToolUnionParam]",
+      "type": "Optional[List[Dict[str,Any]]]",
+      "sdk_type": "Iterable[ChatCompletionToolUnionParam]",
       "required": false,
       "description": "模型可能调用的工具列表。"
     },
     {
       "name": "top_logprobs",
       "type": "Optional[int]",
+      "sdk_type": "Optional[int]",
       "required": false,
       "description": "0 到 20 之间的整数，指定在每个 token 位置返回的最可能 token 的数量，每个 token 都有关联的对数概率。必须设置 `logprobs: true`。"
     },
     {
       "name": "top_p",
       "type": "Optional[float]",
+      "sdk_type": "Optional[float]",
       "required": false,
       "description": "一种替代温度采样的方法，称为核采样。模型考虑具有 top_p 概率质量的 token 结果。"
     },
     {
       "name": "user",
-      "type": "str",
+      "type": "Optional[str]",
+      "sdk_type": "str",
       "required": false,
       "description": "代表最终用户的唯一标识符，可帮助 OpenAI 监控和检测滥用行为。正在被 `safety_identifier` 和 `prompt_cache_key` 取代。"
     },
     {
       "name": "verbosity",
-      "type": "Optional[Literal[\"low\", \"medium\", \"high\"]]",
+      "type": "Optional[str]",
+      "sdk_type": "Optional[Literal[\"low\", \"medium\", \"high\"]]",
       "required": false,
       "description": "限制模型响应的详细程度。支持的值为 `low`, `medium`, `high`。"
     },
     {
       "name": "web_search_options",
-      "type": "WebSearchOptions",
+      "type": "Optional[Dict[str,Any]]",
+      "sdk_type": "WebSearchOptions",
       "required": false,
       "description": "配置 Web 搜索工具的选项。"
-    },
+    }
+  ],
+  "request_options": [
     {
-      "name": "name",
-      "type": "Required[str]",
-      "required": true,
-      "description": "要调用的函数名称。"
-    },
-    {
-      "name": "description",
-      "type": "str",
+      "name": "extra_headers",
+      "type": "Optional[Dict[str,str]]",
+      "sdk_type": "Optional[Dict[str, str]]",
       "required": false,
-      "description": "函数功能的描述，模型根据它来决定何时以及如何调用该函数。"
+      "description": "请求级额外 HTTP headers（不属于请求体 JSON）。例如：{\"x-trace-id\": \"abc\"}。"
     },
     {
-      "name": "parameters",
-      "type": "FunctionParameters",
+      "name": "extra_query",
+      "type": "Optional[Dict[str,str]]",
+      "sdk_type": "Optional[Dict[str, str]]",
       "required": false,
-      "description": "函数接受的参数（JSON Schema 对象）。"
+      "description": "请求级额外 URL query 参数（不属于请求体 JSON）。例如：{\"foo\": \"bar\"}。"
     },
     {
-      "name": "city",
-      "type": "str",
+      "name": "extra_body",
+      "type": "Optional[Dict[str,Any]]",
+      "sdk_type": "Optional[Dict[str, Any]]",
       "required": false,
-      "description": "用户所在城市的自由文本输入。"
+      "description": "请求级额外 body 合并字段（不属于标准请求体 TypedDict）。通常用于 forward-compat。"
     },
     {
-      "name": "country",
-      "type": "str",
+      "name": "timeout",
+      "type": "Optional[float]",
+      "sdk_type": "Optional[float]",
       "required": false,
-      "description": "用户所在国家的两字母代码（ISO）。"
-    },
-    {
-      "name": "region",
-      "type": "str",
-      "required": false,
-      "description": "用户所在地区的自由文本输入。"
-    },
-    {
-      "name": "timezone",
-      "type": "str",
-      "required": false,
-      "description": "用户所在的 IANA 时区。"
-    },
-    {
-      "name": "approximate",
-      "type": "Required[WebSearchOptionsUserLocationApproximate]",
-      "required": true,
-      "description": "搜索的近似位置参数。"
-    },
-    {
-      "name": "type",
-      "type": "Required[Literal[\"approximate\"]]",
-      "required": true,
-      "description": "位置近似类型。始终为 `approximate`。"
-    },
-    {
-      "name": "search_context_size",
-      "type": "Literal[\"low\", \"medium\", \"high\"]",
-      "required": false,
-      "description": "用于搜索的上下文窗口大小的高级指导。`low`, `medium`, 或 `high`。"
-    },
-    {
-      "name": "user_location",
-      "type": "Optional[WebSearchOptionsUserLocation]",
-      "required": false,
-      "description": "搜索的近似位置参数。"
-    },
-    {
-      "name": "stream",
-      "type": "Optional[Literal[False]]",
-      "required": false,
-      "description": "如果设置为 true，将发送部分消息增量。"
+      "description": "请求超时时间（秒）。不属于请求体 JSON。"
     }
   ]
 }
