@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#0b1020" />
+    <title>Evaluator Utils</title>
+    <meta name="description" content="一个简单、无依赖的 GitHub Pages 工具集合页（JSON / Base64 / URL / 时间戳等）。" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+
+    <header class="site-header">
+      <div class="container">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">≡</span>
+          <div class="brand-text">
+            <div class="brand-title">Evaluator Utils</div>
+            <div class="brand-subtitle">简单 · 无依赖 · GitHub Pages</div>
+          </div>
+        </div>
+
+        <nav class="site-nav" aria-label="站点导航">
+          <a href="#tools">工具</a>
+          <a href="#about">关于</a>
+          <button id="themeToggle" class="btn btn-ghost" type="button" aria-label="切换主题">
+            <span class="btn-icon" aria-hidden="true">◐</span>
+            主题
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main" class="container">
+      <section class="hero">
+        <h1>Chat Completions Create 参数编辑器</h1>
+        <p class="muted">
+          将 <code>client.chat.completions.create(...)</code> 的请求参数做成可视化表单。通过校验后才会生成可复制的压缩 JSON。
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#tools">开始使用</a>
+          <a class="btn btn-secondary" href="README.md">查看说明</a>
+        </div>
+      </section>
+
+      <section id="tools" class="section">
+        <div class="section-head">
+          <h2>工具</h2>
+          <p class="muted">全部在浏览器本地运行，不上传数据。</p>
+        </div>
+
+        <div class="grid">
+          <article class="card" data-tool="chat-create">
+            <header class="card-head">
+              <h3><code>client.chat.completions.create</code></h3>
+              <div class="card-actions">
+                <button class="btn btn-ghost btn-sm" data-action="reset" type="button">重置</button>
+                <button class="btn btn-ghost btn-sm" data-action="copy" type="button">复制输出 JSON</button>
+              </div>
+            </header>
+            <div class="card-body">
+              <label class="field">
+                <span class="field-label">model（必填）</span>
+                <input class="input" data-role="model" placeholder="例如：gpt-4.1-mini" />
+                <span class="help muted">要使用的模型名称。</span>
+              </label>
+
+              <div class="divider"></div>
+
+              <label class="field">
+                <span class="field-label">搜索参数</span>
+                <input class="input" data-role="paramSearch" placeholder="输入字段名过滤，例如：temperature / max_completion_tokens / reasoning_effort" />
+                <span class="help muted">参数清单与说明来自 <code>openai==1.99.9</code> 的类型定义。</span>
+              </label>
+
+              <details class="details" open>
+                <summary>全部参数（openai==1.99.9，除 model/messages 外）</summary>
+                <div class="details-body" data-role="autoParams"></div>
+              </details>
+
+              <details class="details">
+                <summary>额外字段（非 SDK，可选，JSON object）</summary>
+                <div class="details-body">
+                  <label class="field">
+                    <span class="field-label">extra（会与上面字段合并）</span>
+                    <textarea class="textarea" data-role="extra" spellcheck="false" placeholder='例如：{"metadata":{"trace_id":"abc"},"service_tier":"default"}'></textarea>
+                    <span class="help muted">用于承接未来 SDK 新增字段（或你自定义的透传字段）。留空不传。</span>
+                  </label>
+                </div>
+              </details>
+
+              <div class="divider"></div>
+
+              <label class="field">
+                <span class="field-label">输出（压缩 JSON，仅在校验通过后出现）</span>
+                <textarea class="textarea" data-role="output" spellcheck="false" readonly placeholder="填写参数后，这里会生成可复制的压缩 JSON"></textarea>
+              </label>
+              <div class="errors" data-role="errors" aria-live="polite"></div>
+              <p class="hint" data-role="hint" aria-live="polite"></p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="about" class="section">
+        <div class="section-head">
+          <h2>关于</h2>
+        </div>
+        <div class="prose">
+          <p>
+            这是一个纯静态的 <strong>Chat Completions Create</strong> 参数编辑器：<strong>HTML + CSS + Vanilla JS</strong>，适合放在
+            <strong>GitHub Pages</strong>。
+            你在表单里修改参数后，页面会进行类型/语法校验；只有校验通过才会生成可复制的压缩 JSON。
+          </p>
+          <p class="muted">
+            提示：为了避免 Jekyll 处理导致的路径/构建差异，本仓库默认带 <code>.nojekyll</code>。
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <span class="muted">© <span id="year"></span> Evaluator Utils</span>
+        <span class="muted">本地运行 · 不上传数据</span>
+      </div>
+    </footer>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>
+
