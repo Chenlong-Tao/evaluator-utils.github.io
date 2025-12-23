@@ -64,23 +64,6 @@
             </header>
             <div class="tool-body">
               <label class="field">
-                <span class="field-label">Model (模型名称)</span>
-                <input class="input" data-role="model" list="model-suggestions" placeholder="例如：gpt-4o" />
-                <datalist id="model-suggestions">
-                  <option value="gpt-4o"></option>
-                  <option value="gpt-4o-mini"></option>
-                  <option value="gpt-4-turbo"></option>
-                  <option value="gpt-4"></option>
-                  <option value="gpt-3.5-turbo"></option>
-                  <option value="o1-preview"></option>
-                  <option value="o1-mini"></option>
-                </datalist>
-                <span class="help muted">可选。要使用的模型 ID（你也可以在别处补上）。</span>
-              </label>
-
-              <div class="divider"></div>
-
-              <label class="field">
                 <span class="field-label">搜索参数</span>
                 <input class="input" type="search" data-role="paramSearch" placeholder="搜索参数名，例如：temp / max / stop..." />
                 <span class="help muted">参数定义来自 <code>openai==1.99.9</code> SDK。</span>

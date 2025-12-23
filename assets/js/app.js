@@ -408,7 +408,6 @@
    * @param {HTMLElement} root
    */
   const initChatCreateEditor = (root) => {
-    const modelEl = /** @type {HTMLInputElement | null} */ (qs(root, '[data-role="model"]'));
     const paramSearchEl = /** @type {HTMLInputElement | null} */ (qs(root, '[data-role="paramSearch"]'));
     const autoParamsEl = qs(root, '[data-role="autoParams"]');
     const requestOptionsEl = qs(root, '[data-role="requestOptions"]');
@@ -418,7 +417,7 @@
     const errorsEl = qs(root, '[data-role="errors"]');
     const extraEl = /** @type {HTMLTextAreaElement | null} */ (qs(root, '[data-role="extra"]'));
 
-    if (!outputEl || !hintEl || !errorsEl || !modelEl || !autoParamsEl || !requestOptionsEl) return;
+    if (!outputEl || !hintEl || !errorsEl || !autoParamsEl || !requestOptionsEl) return;
 
     /**
      * @returns {Record<string, unknown>}
@@ -460,8 +459,6 @@
       /** @type {Record<string, unknown>} */
       const draft = {};
 
-      const model = trimOrEmpty(modelEl.value);
-      if (model) draft.model = model;
       if (extraEl && trimOrEmpty(extraEl.value)) draft.extra = extraEl.value;
 
       /** @type {Record<string, unknown>} */
@@ -513,7 +510,6 @@
      * @param {Record<string, unknown>} draft
      */
     const applyDraft = (draft) => {
-      if (typeof draft.model === "string") modelEl.value = draft.model;
       if (extraEl && typeof draft.extra === "string") extraEl.value = draft.extra;
 
       const auto = isPlainObject(draft.auto) ? /** @type {Record<string, unknown>} */ (draft.auto) : {};
@@ -571,7 +567,6 @@
     };
 
     const reset = () => {
-      modelEl.value = "";
       if (extraEl) extraEl.value = "";
       // reset all auto fields
       qsa(autoParamsEl, "[data-field]").forEach((item) => {
@@ -613,8 +608,6 @@
     const validateAndBuild = () => {
       /** @type {string[]} */
       const errors = [];
-
-      const model = trimOrEmpty(modelEl.value);
 
       /** @type {Record<string, unknown>} */
       const autoValues = {};
@@ -757,7 +750,6 @@
 
       /** @type {Record<string, unknown>} */
       const body = {};
-      if (model) body.model = model;
       Object.assign(body, autoValues);
       if (extra) Object.assign(body, extra);
 
