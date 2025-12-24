@@ -728,7 +728,6 @@
       });
 
       // Common numeric range checks (SDK doc says these ranges)
-      if (typeof autoValues.temperature === "number" && (autoValues.temperature < 0 || autoValues.temperature > 2)) errors.push("temperature 范围为 0~2。");
       if (typeof autoValues.top_p === "number" && (autoValues.top_p < 0 || autoValues.top_p > 1)) errors.push("top_p 范围为 0~1。");
       if (typeof autoValues.presence_penalty === "number" && (autoValues.presence_penalty < -2 || autoValues.presence_penalty > 2))
         errors.push("presence_penalty 范围为 -2~2。");
@@ -814,7 +813,7 @@
     // Render auto params from schema, then reset.
     loadSdkSchema()
       .then((schema) => {
-        const bodyFields = (schema.body_fields || schema.fields || []).filter((f) => f.name !== "model" && f.name !== "messages");
+        const bodyFields = (schema.body_fields || schema.fields || []).filter((f) => f.name !== "model" && f.name !== "messages" && f.name !== "temperature");
         const optFields = schema.request_options || [];
         autoParamsEl.innerHTML = "";
         requestOptionsEl.innerHTML = "";
